@@ -5,5 +5,5 @@ export function signup (email, password) {
 }
 
 export function signin (email, password) {
-  auth.signInWithEmailAndPassword(email, password)
+  return auth.signInWithEmailAndPassword(email, password)
 }
