@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
+
+import { auth } from './services/firebase'
 
 import HomePage from './features/Home/HomePage'
 import ChatPage from './features/Chat/ChatPage'
@@ -36,6 +38,17 @@ function App () {
   const [authenticated, setAuthenticated] = useState(false)
   const [loading, setLoading] = useState(true)
 
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setAuthenticated(true)
+      } else {
+        setAuthenticated(false)
+      }
+      setLoading(false)
+    })
+  }, [])
+
   const render = () => {
     return loading
       ? <h2>...Loading</h2>
@@ -51,9 +64,7 @@ function App () {
       )
   }
 
-  return (
-    { render }
-  );
+  return render()
 }
 
 export default App;
