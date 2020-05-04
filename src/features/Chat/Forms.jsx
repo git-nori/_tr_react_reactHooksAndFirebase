@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 
-import { Form, Button, Alert } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 
 const Forms = ({ submitCb }) => {
   const [content, setContent] = useState("")
-  const [error, setError] = useState(null)
 
   const handleChage = (e) => {
     setContent(e.target.value)
