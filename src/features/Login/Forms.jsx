@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { Form, Button, Alert } from 'react-bootstrap'
 
-import { signin } from '../../helpers/auth'
+import { signin, signinWithGoogle } from '../../helpers/auth'
 
 const Forms = () => {
   const [formData, setFormData] = useState({
@@ -16,13 +16,22 @@ const Forms = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value })
   }
 
-  const handleSubmit = async () => {
-      setError(null)
-      try {
-        await signin(formData.email, formData.password)
-      } catch (err) {
-        setError(err.message)
+  const handleSubmit = async (e) => {
+    setError(null)
+    try {
+      switch (e.target.id) {
+        case "loginBtn":
+          await signin(formData.email, formData.password)
+          break;
+        case "loginWithGoogleBtn":
+          await signinWithGoogle()
+          break;
+        default:
+          break;
       }
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   const renderAlert = () => {
@@ -53,7 +62,8 @@ const Forms = () => {
           value={formData.password}>
         </Form.Control>
       </Form.Group>
-      <Button variant="outline-primary" onClick={handleSubmit}>Login</Button>
+      <Button id="loginBtn" variant="outline-primary mr-3" onClick={handleSubmit}>Login</Button>
+      <Button id="loginWithGoogleBtn" variant="outline-primary" onClick={handleSubmit}>Login with Google</Button>
       <hr />
 
       <p>Dont have an account? <Link to="/signup">Signup</Link></p>
