@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 
 import { auth } from './services/firebase'
 
+import CommonHeader from './components/organisms/CommonHeader'
 import HomePage from './features/Home/HomePage'
 import ChatPage from './features/Chat/ChatPage'
 import LoginPage from './features/Login/LoginPage'
@@ -54,6 +55,7 @@ function App () {
       ? <h2>...Loading</h2>
       : (
         <Router>
+          <CommonHeader authenticated={authenticated} />
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
             <PrivateRoute path="/chat" authenticated={authenticated} component={ChatPage}></PrivateRoute>
